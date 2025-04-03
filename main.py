@@ -43,7 +43,12 @@ class MyForm(QDialog):
             message.setText("Nie podróżuj w czasie!")
             message.exec()
 
-        #Dialog = QEvent
+        #code, ok = QInputDialog().getInt(self, "Weryfikacja","Podaj kod")
+        #if ok:
+        #   code = int(code)
+        #   if code % 3 == 0:
+        #       self.ui.button.setEnabled(True)
+        #       self.ui.button.clicked.connect(self.export)
 
     def export(self):
         ending = self.dateTrial.day() - self.date
