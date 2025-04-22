@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 
 from PyQt6.QtCore import QEvent
 from PyQt6.QtWidgets import QDialog, QApplication, QMessageBox, QFileDialog
@@ -16,21 +15,18 @@ class MyForm(QDialog):
         self.ui.export_2.clicked.connect(self.export)
         self.show()
 
-        self.name = self.ui.name.text()
-        self.surname = self.ui.surname.text()
-        self.birth = self.ui.dateBirth.date()
-        self.date = self.ui.days.text()
-        self.dateTrial = self.ui.dateTrial.date().currentDate()
-
-
     def order(self):
-        #if " " in self.name:
-        if self.name == " " or self.surname == " ":
+        name = self.ui.name.text()
+        surname = self.ui.surname.text()
+        birth = self.ui.dateBirth.date()
+        date = self.ui.days.text()
+        dateTrial = self.ui.dateTrial.date().currentDate()
+        if " " in name:
             message = QMessageBox()
             message.setText("Pusto na polach")
             message.exec()
 
-        if self.birth.year() <= 21:
+        if birth.year() <= 21:
         #now = datetime.now()
         #date21 = datetime.date(now.year - 21, now.month, now.day)
         #if birthDate > date21
@@ -38,7 +34,7 @@ class MyForm(QDialog):
             message.setText("Za młody jestaś na takie wybryki")
             message.exec()
 
-        if self.date.isdigit() > 0 and self.dateTrial.day() > 3:
+        if date.isdigit() > 0 and dateTrial.day() > 3:
             message = QMessageBox()
             message.setText("Nie podróżuj w czasie!")
             message.exec()
@@ -51,7 +47,9 @@ class MyForm(QDialog):
         #       self.ui.button.clicked.connect(self.export)
 
     def export(self):
-        ending = self.dateTrial.day() - self.date
+        date = self.ui.days.text()
+        dateTrial = self.ui.dateTrial.date().currentDate()
+        ending = dateTrial.day() - date
         file, _ = QFileDialog().getSaveFileName(self, "Zapisz Plik", ".", "")
         with open(file, "w") as file:
             file.write(self.ui.comboVechicle.currentText())
